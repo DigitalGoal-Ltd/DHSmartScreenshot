@@ -45,6 +45,10 @@
 	CGPoint originalOffset = [self contentOffset];
 	CGRect headerRect = [self tableHeaderView].frame;
 	
+    if (CGRectEqualToRect(headerRect, CGRectZero)) {
+        return  nil;
+    }
+
 	[self scrollRectToVisible:headerRect animated:NO];
 	UIImage *headerScreenshot = [self screenshotForCroppingRect:headerRect];
 	[self setContentOffset:originalOffset animated:NO];
@@ -57,6 +61,10 @@
 	CGPoint originalOffset = [self contentOffset];
 	CGRect footerRect = [self tableFooterView].frame;
 	
+    if (CGRectEqualToRect(footerRect, CGRectZero)) {
+        return  nil;
+    }
+
 	[self scrollRectToVisible:footerRect animated:NO];
 	UIImage *footerScreenshot = [self screenshotForCroppingRect:footerRect];
 	[self setContentOffset:originalOffset animated:NO];
@@ -69,6 +77,10 @@
 	CGPoint originalOffset = [self contentOffset];
 	CGRect headerRect = [self rectForHeaderInSection:section];
 	
+    if (CGRectEqualToRect(headerRect, CGRectZero)) {
+        return  nil;
+    }
+
 	[self scrollRectToVisible:headerRect animated:NO];
 	UIImage *headerScreenshot = [self screenshotForCroppingRect:headerRect];
 	[self setContentOffset:originalOffset animated:NO];
@@ -81,6 +93,10 @@
 	CGPoint originalOffset = [self contentOffset];
 	CGRect footerRect = [self rectForFooterInSection:section];
 	
+    if (CGRectEqualToRect(footerRect, CGRectZero)) {
+        return  nil;
+    }
+
 	[self scrollRectToVisible:footerRect animated:NO];
 	UIImage *footerScreenshot = [self screenshotForCroppingRect:footerRect];
 	[self setContentOffset:originalOffset animated:NO];
