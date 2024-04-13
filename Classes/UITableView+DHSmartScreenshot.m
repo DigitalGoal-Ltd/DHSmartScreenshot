@@ -45,7 +45,7 @@
 	CGPoint originalOffset = [self contentOffset];
 	CGRect headerRect = [self tableHeaderView].frame;
 	
-    if (CGRectEqualToRect(headerRect, CGRectZero)) {
+    if (headerRect.size.height == 0) {
         return  nil;
     }
 
@@ -61,7 +61,7 @@
 	CGPoint originalOffset = [self contentOffset];
 	CGRect footerRect = [self tableFooterView].frame;
 	
-    if (CGRectEqualToRect(footerRect, CGRectZero)) {
+    if (footerRect.size.height == 0) {
         return  nil;
     }
 
@@ -77,7 +77,7 @@
 	CGPoint originalOffset = [self contentOffset];
 	CGRect headerRect = [self rectForHeaderInSection:section];
 	
-    if (CGRectEqualToRect(headerRect, CGRectZero)) {
+    if (headerRect.size.height == 0) {
         return  nil;
     }
 
@@ -93,7 +93,7 @@
 	CGPoint originalOffset = [self contentOffset];
 	CGRect footerRect = [self rectForFooterInSection:section];
 	
-    if (CGRectEqualToRect(footerRect, CGRectZero)) {
+    if (footerRect.size.height == 0) {
         return  nil;
     }
 
