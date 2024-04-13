@@ -187,9 +187,6 @@
 	
 	UIImage *sectionScreenshot = nil;
 	sectionScreenshot = [self screenshotOfHeaderViewAtSection:section];
-	if (! sectionScreenshot) {
-		sectionScreenshot = [self blankScreenshotOfHeaderAtSection:section];
-	}
 	return sectionScreenshot;
 }
 
@@ -199,9 +196,6 @@
 	
 	UIImage *sectionScreenshot = nil;
 	sectionScreenshot = [self screenshotOfFooterViewAtSection:section];
-	if (! sectionScreenshot) {
-		sectionScreenshot = [self blankScreenshotOfFooterAtSection:section];
-	}
 	return sectionScreenshot;
 }
 
@@ -217,9 +211,6 @@
 	
 	UIImage *sectionScreenshot = nil;
 	sectionScreenshot = [self screenshotOfHeaderViewAtSection:section];
-	if (! sectionScreenshot) {
-		sectionScreenshot = [self blankScreenshotOfHeaderAtSection:section];
-	}
 	return sectionScreenshot;
 }
 
@@ -229,9 +220,6 @@
 	
 	UIImage *sectionScreenshot = nil;
 	sectionScreenshot = [self screenshotOfFooterViewAtSection:section];
-	if (! sectionScreenshot) {
-		sectionScreenshot = [self blankScreenshotOfFooterAtSection:section];
-	}
 	return sectionScreenshot;
 }
 
