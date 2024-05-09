@@ -12,15 +12,16 @@
 
 + (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size
 {
-	UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-	if (context == NULL) return nil;
-	
-    [color set];
-    CGContextFillRect(context, CGRectMake(0.f, 0.f, size.width, size.height));
-	
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    UIGraphicsImageRendererFormat *format = [[UIGraphicsImageRendererFormat alloc] init];
+    [format setOpaque:NO];
+    [format setScale:[UIScreen mainScreen].scale];
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:size format:format];
+    
+    UIImage *image = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+        [color set];
+        CGContextFillRect(rendererContext.CGContext, CGRectMake(0.f, 0.f, size.width, size.height));
+    }];
+
     return image;
 }
 
@@ -32,16 +33,21 @@
 {
 	UIImage *unifiedImage = nil;
 	CGSize totalImageSize = [self verticalAppendedTotalImageSizeFromImagesArray:imagesArray];
-	UIGraphicsBeginImageContextWithOptions(totalImageSize, NO, 0.f);
-	// For each image found in the array, create a new big image vertically
-	CGFloat imageOffsetFactor = 0.0f;
-	for (UIImage *img in imagesArray) {
-		[img drawAtPoint:CGPointMake(0, imageOffsetFactor)];
-		imageOffsetFactor += img.size.height;
-	}
-	
-	unifiedImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    
+    UIGraphicsImageRendererFormat *format = [[UIGraphicsImageRendererFormat alloc] init];
+    [format setOpaque:NO];
+    [format setScale:0.f];
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:totalImageSize format:format];
+    
+    unifiedImage = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+        // For each image found in the array, create a new big image vertically
+        CGFloat imageOffsetFactor = 0.0f;
+        for (UIImage *img in imagesArray) {
+            [img drawAtPoint:CGPointMake(0, imageOffsetFactor)];
+            imageOffsetFactor += img.size.height;
+        }
+    }];
+
 	return unifiedImage;
 }
 

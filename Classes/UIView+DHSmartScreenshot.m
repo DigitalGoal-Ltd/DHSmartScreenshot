@@ -17,19 +17,19 @@
 
 - (UIImage *)screenshotForCroppingRect:(CGRect)croppingRect
 {
-	UIGraphicsBeginImageContextWithOptions(croppingRect.size, NO, [UIScreen mainScreen].scale);
+    UIGraphicsImageRendererFormat *format = [[UIGraphicsImageRendererFormat alloc] init];
+    [format setOpaque:NO];
+    [format setScale:[UIScreen mainScreen].scale];
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:croppingRect.size format:format];
     // Create a graphics context and translate it the view we want to crop so
     // that even in grabbing (0,0), that origin point now represents the actual
     // cropping origin desired:
-    CGContextRef context = UIGraphicsGetCurrentContext();
-	if (context == NULL) return nil;
-    CGContextTranslateCTM(context, -croppingRect.origin.x, -croppingRect.origin.y);
-	
-	[self layoutIfNeeded];
-	[self.layer renderInContext:context];
-	
-	UIImage *screenshotImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    UIImage *screenshotImage = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+        CGContextTranslateCTM(rendererContext.CGContext, -croppingRect.origin.x, -croppingRect.origin.y);
+        [self layoutIfNeeded];
+        [self.layer renderInContext:rendererContext.CGContext];
+    }];
+        
     return screenshotImage;
 }
 
